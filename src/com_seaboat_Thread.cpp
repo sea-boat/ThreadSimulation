@@ -42,19 +42,27 @@ void JavaThread::execRunMethod() {
 
 class OSThread
 {
+private:
+    JavaThread* javaThread;
 public:
-    void call_os_thread(JavaThread* javaThread);
+    OSThread(JavaThread* javaThread);
+    void call_os_thread();
     static void* thread_entry_function(void *args);
 };
 
- void OSThread::call_os_thread(JavaThread *javaThread){
+OSThread::OSThread(JavaThread* javaThread){
+    this->javaThread = javaThread;
+}
+
+void OSThread::call_os_thread(){
     pthread_t tid;
     std::cout << "creating linux thread!" << endl;
-    if(pthread_create(&tid, NULL, &OSThread::thread_entry_function, (void *)javaThread) != 0)
+    if(pthread_create(&tid, NULL, &OSThread::thread_entry_function, this->javaThread) != 0)
     {
         std::cout << "Error creating thread\n" <<endl;
         return;
     }
+    std::cout << "Started a linux thread!" << endl;
     pthread_join(tid,NULL);
 }
 
@@ -63,7 +71,6 @@ void* OSThread::thread_entry_function(void *args)
     JavaThread *javaThread = (JavaThread*)args;
     javaThread->execRunMethod();
     delete javaThread;
-    return NULL;
 }
 
 JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThreadObject)
@@ -71,8 +78,7 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThre
     std::cout << "creating a JavaThread object!" << endl;
     JavaThread* javaThread = new JavaThread(env, jThreadObject);
     std::cout << "creating a OSThread object!" << endl;
-    OSThread osThread;
-    osThread.call_os_thread(javaThread);
-    std::cout << "Started a linux thread!" << endl;
+    OSThread osThread(javaThread);
+    osThread.call_os_thread();
     return;
 }
