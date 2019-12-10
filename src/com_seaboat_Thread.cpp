@@ -1,6 +1,7 @@
 #include <iostream>
 #include <pthread.h>
 #include "com_seaboat_Thread.h"
+#include <sched.h>
 
 using namespace std;
 
@@ -56,14 +57,17 @@ OSThread::OSThread(JavaThread* javaThread){
 
 void OSThread::call_os_thread(){
     pthread_t tid;
+    pthread_attr_t Attr;
+    pthread_attr_init(&Attr);
+    pthread_attr_setdetachstate(&Attr, PTHREAD_CREATE_DETACHED);
     std::cout << "creating linux thread!" << endl;
-    if(pthread_create(&tid, NULL, &OSThread::thread_entry_function, this->javaThread) != 0)
+    if(pthread_create(&tid, &Attr, &OSThread::thread_entry_function, this->javaThread) != 0)
     {
         std::cout << "Error creating thread\n" <<endl;
         return;
     }
     std::cout << "Started a linux thread!" << endl;
-    pthread_join(tid,NULL);
+    pthread_attr_destroy(&Attr);
 }
 
 void* OSThread::thread_entry_function(void *args)
@@ -73,6 +77,7 @@ void* OSThread::thread_entry_function(void *args)
     delete javaThread;
 }
 
+
 JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThreadObject)
 {
     std::cout << "creating a JavaThread object!" << endl;
@@ -81,4 +86,9 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThre
     OSThread osThread(javaThread);
     osThread.call_os_thread();
     return;
+}
+
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0(JNIEnv *env, jobject jThreadObject)
+{
+    sched_yield();
 }

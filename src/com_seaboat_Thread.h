@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     com_seaboat_Thread
+ * Method:    yield0
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_seaboat_Thread
  * Method:    start0
  * Signature: ()V
  */
