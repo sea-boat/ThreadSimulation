@@ -90,5 +90,7 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThre
 
 JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0(JNIEnv *env, jobject jThreadObject)
 {
+    std::cout << "calling yield operation!" << endl;
     sched_yield();
+    return;
 }
