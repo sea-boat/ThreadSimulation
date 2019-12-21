@@ -12,12 +12,10 @@ public class Thread {
 		start0();
 	}
 
-	public void yield() {
-		yield0();
-	}
-
-	private native void yield0();
+	public native void yield();
 
 	private native void start0();
+
+	public static native void sleep(long millis);
 
 }

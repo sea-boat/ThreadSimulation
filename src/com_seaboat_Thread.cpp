@@ -2,8 +2,12 @@
 #include <pthread.h>
 #include "com_seaboat_Thread.h"
 #include <sched.h>
+#include <sys/time.h>
 
 using namespace std;
+
+pthread_mutex_t _mutex;
+pthread_cond_t _cond;
 
 class JavaThread
 {
@@ -88,9 +92,25 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv *env, jobject jThre
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0(JNIEnv *env, jobject jThreadObject)
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield(JNIEnv *env, jobject jThreadObject)
 {
     std::cout << "calling yield operation!" << endl;
     sched_yield();
+    return;
+}
+
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_sleep(JNIEnv *env, jclass jc, jlong millis)
+{
+    std::cout << "calling sleep operation!" << endl;
+    if(millis ==0){
+      sched_yield();
+    }else{
+      struct timespec outtime;
+      struct timeval now;
+      gettimeofday(&now, NULL);
+      outtime.tv_sec = now.tv_sec + 5;
+      outtime.tv_nsec = (now.tv_usec+millis) * 1000;
+      int status = pthread_cond_timedwait(&_cond, &_mutex, &outtime);
+    }
     return;
 }

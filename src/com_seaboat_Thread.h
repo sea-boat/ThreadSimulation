@@ -9,10 +9,10 @@ extern "C" {
 #endif
 /*
  * Class:     com_seaboat_Thread
- * Method:    yield0
+ * Method:    yield
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield
   (JNIEnv *, jobject);
 
 /*
@@ -22,6 +22,14 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield0
  */
 JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0
   (JNIEnv *, jobject);
+
+/*
+ * Class:     com_seaboat_Thread
+ * Method:    sleep
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_sleep
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }
