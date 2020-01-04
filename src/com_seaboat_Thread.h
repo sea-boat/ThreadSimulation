@@ -31,6 +31,22 @@ JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0
 JNIEXPORT void JNICALL Java_com_seaboat_Thread_sleep
   (JNIEnv *, jclass, jlong);
 
+/*
+ * Class:     com_seaboat_Thread
+ * Method:    monitorEnter
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorEnter
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_seaboat_Thread
+ * Method:    monitorExit
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorExit
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif

@@ -17,5 +17,9 @@ public class Thread {
 	private native void start0();
 
 	public static native void sleep(long millis);
+	
+	public static native void monitorEnter();
+	
+	public static native void monitorExit();
 
 }
