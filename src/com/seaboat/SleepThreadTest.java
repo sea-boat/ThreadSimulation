@@ -3,9 +3,15 @@ package com.seaboat;
 public class SleepThreadTest {
 
 	public static void main(String[] args) {
-		System.out.println("主当前线程睡眠3000ms");
-		Thread.sleep(3000);
-		System.out.println("睡眠结束");
+		new MyThread().start();
+		Thread.sleep(4000, 0);
 	}
 
+	static class MyThread extends Thread {
+		public void run() {
+			System.out.println("当前线程睡眠3000ms");
+			Thread.sleep(3000, this.threadId);
+			System.out.println("睡眠结束");
+		}
+	}
 }

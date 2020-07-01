@@ -19,9 +19,8 @@ void Parker::park(long millis) {
 	ts.tv_nsec %= (1000 * 1000 * 1000);
 	status = pthread_cond_timedwait(&_cond, &_mutex, &ts);
 	if (status == 0) {
-		// TODO: singaled
-	}
-	else if (status == ETIMEDOUT) {
+
+	} else if (status == ETIMEDOUT) {
 		// TODO: Time out.
 	}
 	status = pthread_mutex_unlock(&_mutex);

@@ -12,40 +12,50 @@ extern "C" {
  * Method:    yield
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield
-  (JNIEnv *, jobject);
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_yield(JNIEnv*, jobject);
 
 /*
  * Class:     com_seaboat_Thread
  * Method:    start0
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0
-  (JNIEnv *, jobject);
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_start0(JNIEnv*, jobject);
 
 /*
  * Class:     com_seaboat_Thread
  * Method:    sleep
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_sleep
-  (JNIEnv *, jclass, jlong);
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_sleep(JNIEnv*, jclass, jlong,
+		jint);
 
 /*
  * Class:     com_seaboat_Thread
  * Method:    monitorEnter
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorEnter
-  (JNIEnv *, jclass);
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorEnter(JNIEnv*, jclass);
 
 /*
  * Class:     com_seaboat_Thread
  * Method:    monitorExit
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorExit
-  (JNIEnv *, jclass);
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_monitorExit(JNIEnv*, jclass);
+
+/*
+ * Class:     com_seaboat_Thread
+ * Method:    isInterrupted
+ * Signature: 
+ */
+JNIEXPORT bool JNICALL Java_com_seaboat_Thread_isInterrupted(JNIEnv*, jobject);
+
+/*
+ * Class:     com_seaboat_Thread
+ * Method:    interrupt
+ * Signature: 
+ */
+JNIEXPORT void JNICALL Java_com_seaboat_Thread_interrupt(JNIEnv*, jobject);
 
 #ifdef __cplusplus
 }
